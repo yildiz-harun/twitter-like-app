@@ -4,14 +4,14 @@ import Home from "./pages/Home"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import { AuthContext } from "./contexts/AuthContextProvider"
-import Navbar from "./components/Navbar";
+import NavigationBar from "./components/NavigationBar";
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
 
   return (
-    <BrowserRouter>
-      <Navbar />
+    <BrowserRouter >
+      <NavigationBar />
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="login" />} />
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
