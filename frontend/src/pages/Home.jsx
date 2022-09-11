@@ -1,10 +1,10 @@
-import Form from '../components/Form'
+import PostForm from '../components/PostForm'
 import PostsList from '../components/PostsList'
 
 function Home() {
   return (
     <div>
-      <Form />
+      <PostForm />
       <PostsList />
     </div>
   )
