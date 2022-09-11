@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Home from "./pages/Home"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
@@ -8,7 +8,13 @@ import NavigationBar from "./components/NavigationBar";
 
 function App() {
   const { user, setUser } = useContext(AuthContext)
+  useEffect(() => {
+    const foo = async () => {
 
+      setUser(JSON.parse(localStorage.getItem('user')))
+    }
+    foo()
+  }, [])
   return (
     <BrowserRouter >
       <NavigationBar />
