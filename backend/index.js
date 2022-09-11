@@ -14,3 +14,8 @@ app.listen("5000", () => {
     connect()
 })
 
+const { postRouter } = require("./routes/post")
+const { userRouter } = require("./routes/user")
+
+app.use("/api/posts", postRouter)
+app.use("/api/user", userRouter)
