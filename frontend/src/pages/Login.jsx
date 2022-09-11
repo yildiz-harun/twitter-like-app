@@ -1,3 +1,7 @@
+import { useState, useContext } from 'react'
+import { AuthContext } from '../contexts/AuthContextProvider'
+import axios from 'axios'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -5,12 +9,37 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 function Login() {
+  const { user, setUser } =
+    useContext(AuthContext)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] =
+    useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    const response = await axios.post(
+      'http://localhost:5000/api/user/login',
+      { email: email, password: password }
+    )
+
+    // save the user to local storage
+    localStorage.setItem(
+      'user',
+      JSON.stringify(response)
+    )
+    setUser(response)
+    console.log(response)
+    setIsLoading(false)
+  }
+
   return (
     <div>
       <Container>
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Form.Group
                 className="mb-3"
                 controlId="formBasicEmail"
@@ -21,6 +50,10 @@ function Login() {
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
+                  value={email}
                 />
               </Form.Group>
 
@@ -32,6 +65,10 @@ function Login() {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
+                  value={password}
                 />
               </Form.Group>
               <Form.Group
@@ -41,6 +78,7 @@ function Login() {
               <Button
                 variant="primary"
                 type="submit"
+                disabled={isLoading}
               >
                 Log in
               </Button>
